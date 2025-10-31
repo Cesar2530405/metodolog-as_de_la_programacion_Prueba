@@ -44,3 +44,32 @@ print (full_name)
 
 print("Hola," + full_name.title() + "!") 
 
+
+#Sintax error con strings
+error_sintaxis = "Una fortaleza de Python es su comunidad"
+print(error_sintaxis + "Python"+ "Python")
+
+
+# Concatenacion con f-strings
+famous_person = "Cesar Martinez"
+quote = "Python is love"
+
+#Concatenacion convencional
+message = famous_person +" una vez dijo "+ quote
+print(message)
+
+# Concatenacion con fstring
+message_f_string = f"{famous_person} una vez dijo {quote}"
+print (message_f_string)
+
+# Actividad
+"""
+1) Elige un personaje famoso e igualalo a una variable del tipo string 
+2) Elige una frase famosa que haya dicho e iguala a una variable de tipo string 
+3) Genera un mensaje con las dos varibles utilizando f-string
+4) Imprime el mensaje 
+
+
+
+
+"""
