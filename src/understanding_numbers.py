@@ -115,3 +115,54 @@ print("La multiplicacion es del tipo", type(multiplication))
 print("La division es del tipo", type(division))
 print("La modulo es del tipo", type(modulo))
 print("La power es del tipo", type(power))     
+
+
+# floats
+
+"""
+floats - reales 
+
+son numeros con punto decimal van desde -infinity - infinity
+
+ejemplo:
+
+#tipado dinamico
+age = 25.5
+
+lo podemos sumar (+), restar (-), multiplicar() y dividir (/)
+
+
+"""
+
+print(0.1+0.1)
+print(0.2-0.2)
+print(2*0.1)
+print(2*0.2)
+
+print(0.2+0.1)
+print(3*0.1)
+
+
+
+
+
+
+
+
+
+
+
+### Imprimir la edad de alguien 
+
+age = 33
+message = "Cesar tiene " + str (age) + "años"
+print (message)
+
+"""
+TypeError: Python no puede reconocer el tipo de informacion que se esta utilizando.
+
+Para convertir a string utilizo: str()
+
+"""
+message_f = f"Cesar tiene {age} años"
+print(message_f)

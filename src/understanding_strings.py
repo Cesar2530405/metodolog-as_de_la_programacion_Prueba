@@ -45,6 +45,26 @@ print (full_name)
 print("Hola," + full_name.title() + "!") 
 
 
+#  Whitespaces
+"""
+Whitespaces se refiere a cualquier caracter que no se imprime, es decir, un tabulador y finales de linea. Los whitespaces se utilizan comunmente para organizar las salidas (prints) de tal manera que sea mas amigable de leer o ver para los usuarios
+
+"""
+
+#Ejemplos
+print("Python")
+print("\tPython") # Tabulador
+print("\t\tPython") # Tabulador 
+
+# Ejemplo salto de linea
+print("Languages: \n Python \n C \n Javascript")
+
+print("Cesar")
+print("Martinez")
+
+
+
+
 #Sintax error con strings
 error_sintaxis = "Una fortaleza de Python es su comunidad"
 print(error_sintaxis + "Python"+ "Python")
@@ -73,3 +93,12 @@ print (message_f_string)
 
 
 """
+
+
+
+# Eliminacion de espacios en blanco 
+programming_languages = "Python"
+print(programming_languages)
+print(programming_languages.lstrip())
+print(programming_languages.rstrip ())
+print(programming_languages.strip())
