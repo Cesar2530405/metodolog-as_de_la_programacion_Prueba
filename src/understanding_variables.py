@@ -24,7 +24,7 @@ los nombres de variales en python deben nombrarse solo con:
 
 charly_message = "Hola soy Charly y estoy aprendiendo Python"
 print (charly_message)
-print (charly_mesage)
+print (charly_message)
 
 """
 traceback: Es un registro de donde el interprete tuvo problemas al intetar ejecutar el codigo
