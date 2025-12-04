@@ -1,0 +1,484 @@
+
+# Portada:
+# Nombre: Cesar Luis Partida Martinez
+# Matrícula: 2530405
+# Grupo: IM 1-2
+
+# Resumen ejecutivo:
+
+# Este archivo contiene seis ejercicios centrados en la definición y uso
+# de funciones en Python. Se muestran ejemplos de:
+# - cómo definir funciones con def, parámetros y valores de retorno,
+# - parámetros con valor por defecto y llamadas con argumentos posicionales y nombrados,
+# - funciones puras (no modificar datos de entrada) y funciones que validan entradas.
+# Se incluyen comentarios en español (documentación) y todo el código y
+# mensajes impresos en inglés. Cada problema tiene descripciones, validaciones
+# y tres casos de prueba (normal, borde y error). Al final hay conclusiones
+# y referencias.
+
+
+# Principios y buenas prácticas 
+
+# - Preferir funciones pequeñas que hagan una sola tarea (single responsibility).
+# - Evitar efectos secundarios innecesarios: retornar valores en lugar de imprimir desde la función.
+# - Documentar parámetros y valores de retorno con comentarios breves.
+# - Usar parámetros con valor por defecto para flexibilidad.
+# - Evitar variables globales; si son necesarias, declararlas explícitamente como constantes.
+# - Validar entradas antes de procesarlas en la función o en el código que la llama.
+
+MAX_FACTORIAL_N = 20  # reasonable upper limit for factorial to avoid huge numbers
+
+
+
+
+# Problem 1: Rectangle area and perimeter (basic functions)
+# Description: Define functions to compute area and perimeter of a rectangle.
+
+# Inputs:
+# - width (float)
+# - height (float)
+
+# Outputs:
+# - "Area:" <area_value>
+# - "Perimeter:" <perimeter_value>
+
+# Validations:
+# - width > 0 and height > 0; else print "Error: invalid input"
+
+# Test cases:
+# 1) Normal: width=5, height=3 -> Area:15, Perimeter:16
+# 2) Border: width=0.1, height=0.1 -> small positive values
+# 3) Error: width=-1 or non-numeric -> "Error: invalid input"
+
+def calculate_area(width, height):
+    """Return area = width * height. Assumes inputs are numbers."""
+    return width * height
+
+
+def calculate_perimeter(width, height):
+    """Return perimeter = 2 * (width + height)."""
+    return 2 * (width + height)
+
+
+def problem1_rectangle(width_raw, height_raw):
+    """Wrapper: validate inputs, call functions, print results. Returns dict or None on error."""
+    try:
+        width = float(width_raw)
+        height = float(height_raw)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if width <= 0 or height <= 0:
+        print("Error: invalid input")
+        return None
+
+    area = calculate_area(width, height)
+    perimeter = calculate_perimeter(width, height)
+
+    print("Area:", round(area, 6))
+    print("Perimeter:", round(perimeter, 6))
+    return {"area": area, "perimeter": perimeter}
+
+
+
+# Problem 2: Grade classifier (function with return string)
+# Description: classify a numeric score into letter grade using a function.
+
+# Inputs:
+# - score (float or int)
+
+# Outputs:
+# - "Score:" <score>
+# - "Category:" <grade_letter>
+
+# Validations:
+# - 0 <= score <= 100; else "Error: invalid input"
+
+# Test cases:
+# 1) Normal: score=92 -> A
+# 2) Border: score=70 -> C
+# 3) Error: score=150 or non-numeric -> "Error: invalid input"
+
+def classify_grade(score):
+    """Return grade letter for a score between 0 and 100 inclusive."""
+    # assume score is numeric and validated by caller
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    elif score >= 60:
+        return "D"
+    else:
+        return "F"
+
+
+def problem2_classify(score_raw):
+    """Validate input, call classify_grade, print result and return dict or None on error."""
+    try:
+        score = float(score_raw)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if score < 0 or score > 100:
+        print("Error: invalid input")
+        return None
+
+    # convert to int if it is integral for nicer output, but function accepts float
+    grade_letter = classify_grade(score)
+    print("Score:", round(score, 6))
+    print("Category:", grade_letter)
+    return {"score": score, "category": grade_letter}
+
+
+# Problem 3: List statistics function (min, max, average)
+# Description: Define summarize_numbers(numbers_list) that returns min,max,average as a dict.
+
+# Inputs:
+# - numbers_text (string, e.g., "10,20,30")
+
+# Outputs:
+# - "Min:" <min_value>
+# - "Max:" <max_value>
+# - "Average:" <average_value>
+
+# Validations:
+# - numbers_text not empty after strip
+# - all elements convertible to float
+# - list not empty after conversion
+
+# Test cases:
+# 1) Normal: "10,20,30" -> Min:10 Max:30 Average:20
+# 2) Border: "5" -> single element
+# 3) Error: "a,2,3" -> "Error: invalid input"
+
+def summarize_numbers(numbers_list):
+    """Return dict {'min':..., 'max':..., 'average':...}. Assumes numbers_list is non-empty list of numbers."""
+    minimum = min(numbers_list)
+    maximum = max(numbers_list)
+    average = sum(numbers_list) / len(numbers_list)
+    return {"min": minimum, "max": maximum, "average": average}
+
+
+def problem3_list_statistics(numbers_text):
+    """Parse numbers_text, validate, call summarize_numbers, print and return results or None on error."""
+    if numbers_text is None or str(numbers_text).strip() == "":
+        print("Error: invalid input")
+        return None
+
+    parts = [p.strip() for p in str(numbers_text).split(",")]
+    numbers = []
+    try:
+        for p in parts:
+            if p == "":
+                continue
+            num = float(p)
+            numbers.append(num)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if len(numbers) == 0:
+        print("Error: invalid input")
+        return None
+
+    result = summarize_numbers(numbers)
+    print("Min:", round(result["min"], 6))
+    print("Max:", round(result["max"], 6))
+    print("Average:", round(result["average"], 6))
+    return result
+
+
+
+# Problem 4: Apply discount list (pure function)
+# Description: apply_discount(prices_list, discount_rate) returns new discounted list (does not modify input).
+
+# Inputs:
+# - prices_text (string e.g. "100,200,300")
+# - discount_rate (float between 0 and 1)
+
+# Outputs:
+# - "Original prices:" <original_list>
+# - "Discounted prices:" <discounted_list>
+
+# Validations:
+# - prices_text not empty, all prices > 0
+# - 0 <= discount_rate <= 1
+
+# Test cases:
+# 1) Normal: "100,200", discount_rate=0.1 -> [90,180]
+# 2) Border: single price "50", discount_rate=0 -> unchanged
+# 3) Error: negative price or rate>1 -> "Error: invalid input"
+
+def apply_discount(prices_list, discount_rate):
+    """
+    Pure function: return a new list with discounted prices.
+    prices_list: list of floats
+    discount_rate: float 0..1
+    """
+    discounted = []
+    for p in prices_list:
+        discounted_price = p * (1.0 - discount_rate)
+        discounted.append(discounted_price)
+    return discounted
+
+
+def problem4_apply_discount(prices_text, discount_rate_raw):
+    """Parse inputs, validate, call apply_discount, print original and discounted lists, return dict or None."""
+    if prices_text is None or str(prices_text).strip() == "":
+        print("Error: invalid input")
+        return None
+
+    try:
+        discount_rate = float(discount_rate_raw)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if discount_rate < 0 or discount_rate > 1:
+        print("Error: invalid input")
+        return None
+
+    parts = [p.strip() for p in str(prices_text).split(",")]
+    prices = []
+    try:
+        for p in parts:
+            if p == "":
+                continue
+            price = float(p)
+            if price <= 0:
+                # require prices > 0
+                print("Error: invalid input")
+                return None
+            prices.append(price)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if len(prices) == 0:
+        print("Error: invalid input")
+        return None
+
+    discounted = apply_discount(prices, discount_rate)
+    # Print lists with rounded values
+    print("Original prices:", [round(x, 6) for x in prices])
+    print("Discounted prices:", [round(x, 6) for x in discounted])
+    return {"original": prices, "discounted": discounted}
+
+
+
+# Problem 5: Greeting function with default parameters
+# Description: greet(name, title="") returns "Hello, <full_name>!"
+
+# Inputs:
+# - name (string)
+# - title (string optional)
+
+# Outputs:
+# - "Greeting:" <greeting_message>
+
+# Validations:
+# - name not empty after strip
+
+# Test cases:
+# 1) Normal: name="Alice", title="Dr." -> "Hello, Dr. Alice!"
+# 2) Border: title empty -> "Hello, Alice!"
+# 3) Error: name empty -> "Error: invalid input"
+
+def greet(name, title=""):
+    """Return greeting string. Title placed before name if provided."""
+    # normalize inputs (caller should validate)
+    name_clean = str(name).strip()
+    title_clean = str(title).strip() if title is not None else ""
+    if title_clean != "":
+        full_name = f"{title_clean} {name_clean}"
+    else:
+        full_name = name_clean
+    return f"Hello, {full_name}!"
+
+
+def problem5_greet(name_raw, title_raw=""):
+    """Validate and call greet, print result and return greeting or None on error."""
+    if name_raw is None or str(name_raw).strip() == "":
+        print("Error: invalid input")
+        return None
+
+    greeting = greet(name_raw, title_raw)
+    print("Greeting:", greeting)
+    return greeting
+
+
+# Problem 6: Factorial function (iterative)
+# Description: Implement factorial(n) iteratively with validation and limit MAX_FACTORIAL_N.
+
+# Inputs:
+# - n (int)
+
+# Outputs:
+# - "n:" <n>
+# - "Factorial:" <factorial_value>
+
+# Validations:
+# - n integer, n >= 0, n <= MAX_FACTORIAL_N
+
+# Test cases:
+# 1) Normal: n=5 -> 120
+# 2) Border: n=0 -> 1
+# 3) Error: n negative or n>MAX_FACTORIAL_N -> "Error: invalid input"
+
+def factorial(n):
+    """
+    Iterative factorial implementation.
+    Chosen iterative to avoid recursion depth and clearer resource usage.
+    Returns integer factorial of n (n!).
+    Assumes n is non-negative integer.
+    """
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+
+def problem6_factorial(n_raw):
+    """Validate n_raw, call factorial, print results and return dict or None on error."""
+    try:
+        # allow floats that are integer-valued
+        n_val = float(n_raw)
+        if not n_val.is_integer():
+            print("Error: invalid input")
+            return None
+        n = int(n_val)
+    except (TypeError, ValueError):
+        print("Error: invalid input")
+        return None
+
+    if n < 0 or n > MAX_FACTORIAL_N:
+        print("Error: invalid input")
+        return None
+
+    fact = factorial(n)
+    print("n:", n)
+    print("Factorial:", fact)
+    return {"n": n, "factorial": fact}
+
+
+# Test driver: run 3 test cases per problem (normal, border, error)
+
+def run_all_tests():
+    print("\n" + "=" * 70)
+    print("Problem 1 Tests (Rectangle area and perimeter)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal (5,3):")
+    problem1_rectangle(5, 3)
+    # Border
+    print("\nTest 2 - Border (0.1,0.1):")
+    problem1_rectangle(0.1, 0.1)
+    # Error
+    print("\nTest 3 - Error (-1,2):")
+    problem1_rectangle(-1, 2)
+
+    print("\n" + "=" * 70)
+    print("Problem 2 Tests (Grade classifier)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal (92):")
+    problem2_classify(92)
+    # Border
+    print("\nTest 2 - Border (70):")
+    problem2_classify(70)
+    # Error
+    print("\nTest 3 - Error (150):")
+    problem2_classify(150)
+
+    print("\n" + "=" * 70)
+    print("Problem 3 Tests (List statistics)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal ('10,20,30'):")
+    problem3_list_statistics("10,20,30")
+    # Border
+    print("\nTest 2 - Border ('5'):")
+    problem3_list_statistics("5")
+    # Error
+    print("\nTest 3 - Error ('a,2,3'):")
+    problem3_list_statistics("a,2,3")
+
+    print("\n" + "=" * 70)
+    print("Problem 4 Tests (Apply discount pure function)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal ('100,200', 0.1):")
+    problem4_apply_discount("100,200", 0.1)
+    # Border
+    print("\nTest 2 - Border ('50', 0.0):")
+    problem4_apply_discount("50", 0.0)
+    # Error
+    print("\nTest 3 - Error ('100,-5', 0.1) negative price:")
+    problem4_apply_discount("100,-5", 0.1)
+
+    print("\n" + "=" * 70)
+    print("Problem 5 Tests (Greeting with default parameters)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal (name='Alice', title='Dr.'):")
+    problem5_greet("Alice", "Dr.")
+    # Border
+    print("\nTest 2 - Border (name='Bob', title=''):")
+    problem5_greet("Bob", "")
+    # Error
+    print("\nTest 3 - Error (name empty):")
+    problem5_greet("", "Mr.")
+
+    print("\n" + "=" * 70)
+    print("Problem 6 Tests (Factorial)")
+    print("-" * 70)
+    # Normal
+    print("\nTest 1 - Normal (n=5):")
+    problem6_factorial(5)
+    # Border
+    print("\nTest 2 - Border (n=0):")
+    problem6_factorial(0)
+    # Error
+    print("\nTest 3 - Error (n=21 > MAX):")
+    problem6_factorial(MAX_FACTORIAL_N + 1)
+
+    print("\n" + "=" * 70)
+    print("All tests completed.")
+    print("=" * 70 + "\n")
+
+
+# Ejecutar pruebas sólo si este archivo se ejecuta como script principal
+if __name__ == "__main__":
+    run_all_tests()
+
+
+# Conclusiones 
+
+# Las funciones permiten separar la lógica en unidades reutilizables y facilitan
+# las pruebas unitarias. Al retornar valores (return) en lugar de imprimir,
+# las funciones son más reutilizables y no tienen efectos secundarios.
+# Los parámetros por defecto y los argumentos nombrados aumentan la flexibilidad.
+# Es conveniente mantener funciones pequeñas y bien documentadas para mejorar
+# la legibilidad y reducir errores. Extraer validaciones en funciones de apoyo
+# ayuda a mantener el código principal limpio.
+
+# Referencias 
+
+# References:
+# 1) Python documentation - Defining Functions
+#    https://docs.python.org/3/tutorial/controlflow.html#defining-functions
+# 2) The Python Tutorial — Data Structures and Functions
+#    https://docs.python.org/3/tutorial/
+# 3) Real Python - articles on Python functions and best practices (realpython.com)
+# 4) "Clean Code" principles adapted to Python functions (various online articles)
+# 5) Classroom notes and resources on functions, parameters and return values
+
+
+# URL
+
+# https://github.com/Cesar2530405/metodolog-as_de_la_programacion_Prueba.git
+# git@github.com:Cesar2530405/metodolog-as_de_la_programacion_Prueba.git
